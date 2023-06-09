@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 #Global variables
 cookie_url = "https://globalsearch.cuny.edu/CFGlobalSearchTool/CFSearchToolController"
 
-def status(url):
+def get_status(url):
     session = requests.Session()
     response = session.get(cookie_url)
     html = response.text
@@ -24,8 +24,8 @@ def status(url):
     if status_response.status_code == 200:
 
         if status_response.text.find("status_open") != -1:
-            return True
+            return True,''
         elif status_response.text.find("status_closed") != -1: 
-            return False
+            return False,''
         else:
-            return "Error-incorrect html parsed"
+            return False,'Error-incorrect html parsed'

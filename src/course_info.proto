@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+service CourseInfo {
+  // Sends a greeting
+  rpc GetCourseInfo (CourseInfoRequest) returns (CourseInfoReply) {}
+}
+
+// The request message containing the user's name.
+message CourseInfoRequest {
+  string url = 1;
+}
+
+// The response message containing the greetings
+message CourseInfoReply {
+  bool status = 1;
+  string error = 2;
+}

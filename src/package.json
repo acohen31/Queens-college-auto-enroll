@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.15",
+    "@grpc/proto-loader": "^0.7.7"
+  },
+  "type": "module"
+}
