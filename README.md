@@ -1,3 +1,5 @@
 # Queens-college-auto-enroll
 
-fill out .env-example and rename to .env
+Required Libraries:
+    requests
+    bs4
