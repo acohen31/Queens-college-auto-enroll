@@ -1,21 +1,31 @@
-import grpc from "@grpc/grpc-js";
-import protoLoader from "@grpc/proto-loader"
-const PROTO_PATH = 'course_info.proto';
-const packageDefinition = protoLoader.loadSync(
-    PROTO_PATH, 
-        {keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-       });
-const courseInfo = grpc.loadPackageDefinition(packageDefinition);
-const client = new courseInfo.CourseInfo('localhost:50051', grpc.credentials.createInsecure());
+import { Client, IntentsBitField } from "discord.js";
+import { getCourseInfo } from "./grpcClient.js"
+import * as dotenv from "dotenv";
+dotenv.config();
 
-client.getCourseInfo({url:'https://globalsearch.cuny.edu/CFGlobalSearchTool/CFSearchToolController?class_number_searched=MjU1MTE=&session_searched=MQ==&term_searched=MTIzOQ==&inst_searched=UXVlZW5zIENvbGxlZ2U='},(err,response)=>{
-    if(err){
-        console.log(err)
-    }else{
-        console.log(response.status)
+const TOKEN = process.env.TOKEN;
+const client = new Client({
+    intents: [
+        IntentsBitField.Flags.Guilds,
+        IntentsBitField.Flags.GuildMembers,
+        IntentsBitField.Flags.GuildMessages,
+        IntentsBitField.Flags.MessageContent,
+    ],
+});
+
+client.on("ready", (c) => {
+    console.log(`${client.user.tag} is online.`);
+});
+
+client.on(`interactionCreate`, async (interaction) => { // user sends a command, handle it
+    // Guard, will only run if it is a / command
+    if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === "check_status") {
+        const url = interaction.options.get("url").value;
+        const status = await getCourseInfo(url);  
+        interaction.reply(`${status}`)
     }
-})
+});
+
+client.login(TOKEN);
