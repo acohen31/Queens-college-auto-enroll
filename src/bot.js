@@ -17,7 +17,7 @@ const client = new Client({
 
 client.on("ready", () => {
   console.log(`${client.user.tag} is online.`);
-  const delay = 5000;
+  const delay = 30000;
   setInterval(() => {
     //Checks status of all classes on an interval
     const channel = client.channels.cache.get(CHANNEL_ID);
