@@ -23,7 +23,7 @@ client.on(`interactionCreate`, async (interaction) => {
   // Guard, will only run if it is a / command
   if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === "check_status") {
+  if (interaction.commandName === "add_class") {
     const myClass = interaction.options.get("class").value;
     const url = interaction.options.get("url").value;
     if (classList.has(myClass)) {
@@ -31,11 +31,11 @@ client.on(`interactionCreate`, async (interaction) => {
     } else {
       classList.set(myClass, url);
       const status = await getCourseInfo(url);
-      if(status){
-        interaction.reply(`${myClass} is open`)
-        } else {
-            interaction.reply(`${myClass} is closed`)
-        }
+      if (status) {
+        interaction.reply(`${myClass} is open`);
+      } else {
+        interaction.reply(`${myClass} is closed`);
+      }
     }
   }
 
@@ -45,7 +45,7 @@ client.on(`interactionCreate`, async (interaction) => {
       interaction.reply(`${myClass} is not listed`);
     } else {
       classList.delete(myClass);
-      interaction.reply(`${myClass} was successfully removed`)
+      interaction.reply(`${myClass} was successfully removed`);
     }
   }
 });

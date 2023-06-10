@@ -8,8 +8,8 @@ const CLIENT_ID = process.env.CLIENT_ID;
 
 const commands = [
   {
-    name: "check_status",
-    description: "check course status",
+    name: "add_class",
+    description: "add class to class list",
     options: [
       {
         name: "class",
