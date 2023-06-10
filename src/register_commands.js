@@ -27,6 +27,11 @@ const commands = [
     ],
   },
   {
+    name: "class_list",
+    description: "lists all classes currently being queried",
+    options: [],
+  },
+  {
     name: "remove",
     description: "remove course from status checker",
     options: [
@@ -35,8 +40,8 @@ const commands = [
         description: "eg. CSCI 313, must include space",
         type: ApplicationCommandOptionType.String,
         required: true,
-      }
-    ]
+      },
+    ],
   },
 ];
 

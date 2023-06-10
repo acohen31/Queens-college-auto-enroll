@@ -39,6 +39,16 @@ client.on(`interactionCreate`, async (interaction) => {
     }
   }
 
+  if (interaction.commandName === "class_list") {
+    // let myClassList = "CLASS LIST:\n";
+    // classList.forEach((value, key) => {
+    //   myClassList += key + "\n";
+    //   interaction.reply(`${myClassList}`);
+    // });
+    // interaction.reply(`${classList}`);
+    interaction.reply(`CLASS LIST:\n   ${[...classList.keys()].join('\n   ')}`);
+  }
+
   if (interaction.commandName === "remove") {
     const myClass = interaction.options.get("class").value;
     if (!classList.has(myClass)) {
