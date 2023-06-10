@@ -12,12 +12,31 @@ const commands = [
     description: "check course status",
     options: [
       {
+        name: "class",
+        description: "eg. CSCI 313, must include space",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      },
+      {
         name: "url",
-        description: "https://globalsearch.cuny.edu/CFGlobalSearchTool/CFSearchToolController?...",
+        description:
+          "https://globalsearch.cuny.edu/CFGlobalSearchTool/CFSearchToolController?...",
         type: ApplicationCommandOptionType.String,
         required: true,
       },
     ],
+  },
+  {
+    name: "remove",
+    description: "remove course from status checker",
+    options: [
+      {
+        name: "class",
+        description: "eg. CSCI 313, must include space",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+      }
+    ]
   },
 ];
 

@@ -9,14 +9,11 @@ class CourseInfoServicer(course_info_pb2_grpc.CourseInfoServicer):
         ''
 
     def GetCourseInfo(self, request, context):
-        print('hello')
         is_open,error = get_status(request.url)
-        what = course_info_pb2.CourseInfoReply(status=is_open,error=error)
-        print('it printed what','\n\n\n\n\n',type(what))
-        return what
+        return course_info_pb2.CourseInfoReply(status=is_open,error=error)
 
 def serve():
-    print('running')
+    print('gRPC server is running...')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     course_info_pb2_grpc.add_CourseInfoServicer_to_server(
         CourseInfoServicer(), server)
