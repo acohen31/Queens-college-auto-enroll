@@ -15,12 +15,11 @@ const client = new Client({
   ],
 });
 
-client.on("ready", (c) => {
+client.on("ready", () => {
   console.log(`${client.user.tag} is online.`);
   const delay = 5000;
   setInterval(() => {
     //Checks status of all classes on an interval
-    console.log("Performing action...");
     const channel = client.channels.cache.get(CHANNEL_ID);
     if (channel) {
       classList.forEach(async (value, key) => {
