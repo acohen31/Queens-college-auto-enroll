@@ -3,6 +3,7 @@ import { getCourseInfo } from "./grpcClient.js";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+const classList = new Map();
 const TOKEN = process.env.TOKEN;
 const client = new Client({
   intents: [
@@ -12,7 +13,6 @@ const client = new Client({
     IntentsBitField.Flags.MessageContent,
   ],
 });
-const classList = new Map();
 
 client.on("ready", (c) => {
   console.log(`${client.user.tag} is online.`);
@@ -29,16 +29,23 @@ client.on(`interactionCreate`, async (interaction) => {
     if (classList.has(myClass)) {
       interaction.reply(`${myClass} is already listed`);
     } else {
-      classList.set(myClass, url)
+      classList.set(myClass, url);
       const status = await getCourseInfo(url);
-      interaction.reply(`${status}`);
+      if(status){
+        interaction.reply(`${myClass} is open`)
+        } else {
+            interaction.reply(`${myClass} is closed`)
+        }
     }
   }
 
   if (interaction.commandName === "remove") {
     const myClass = interaction.options.get("class").value;
-    if (!classList.has(myClass)){
-        interaction.reply(`${myClass} is not listed`)
+    if (!classList.has(myClass)) {
+      interaction.reply(`${myClass} is not listed`);
+    } else {
+      classList.delete(myClass);
+      interaction.reply(`${myClass} was successfully removed`)
     }
   }
 });
@@ -48,7 +55,7 @@ function getClassStatus() {
   classList.forEach(async (value, key) => {
     const status = await getCourseInfo(classList.get(key));
     console.log(`Key: ${key}, Value: ${value}`);
-      console.log(`${status}`);
+    if (status) console.log(`${status}`);
   });
 }
 
