@@ -17,11 +17,10 @@ const client = new Client({
 
 client.on("ready", () => {
   console.log(`${client.user.tag} is online.`);
-  const channel = client.channels.cache.get(CHANNEL_ID);
-  channel.send("Course Bot is online.")
-  const delay = 30000;
+  const delay = 5000;
   setInterval(() => {
     //Checks status of all classes on an interval
+    const channel = client.channels.cache.get(CHANNEL_ID);
     if (channel) {
       classList.forEach(async (value, key) => {
         const status = await getCourseInfo(classList.get(key));
