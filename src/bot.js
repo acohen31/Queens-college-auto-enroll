@@ -19,13 +19,14 @@ client.on("ready", (c) => {
   console.log(`${client.user.tag} is online.`);
   const delay = 5000;
   setInterval(() => {
+    //Checks status of all classes on an interval
     console.log("Performing action...");
     const channel = client.channels.cache.get(CHANNEL_ID);
     if (channel) {
       classList.forEach(async (value, key) => {
         const status = await getCourseInfo(classList.get(key));
         if (status) {
-            channel.send(`${key} is open`)
+          channel.send(`${key} is open`);
         }
       });
     }
@@ -53,12 +54,6 @@ client.on(`interactionCreate`, async (interaction) => {
   }
 
   if (interaction.commandName === "class_list") {
-    // let myClassList = "CLASS LIST:\n";
-    // classList.forEach((value, key) => {
-    //   myClassList += key + "\n";
-    //   interaction.reply(`${myClassList}`);
-    // });
-    // interaction.reply(`${classList}`);
     interaction.reply(`CLASS LIST:\n   ${[...classList.keys()].join("\n   ")}`);
   }
 
@@ -72,14 +67,5 @@ client.on(`interactionCreate`, async (interaction) => {
     }
   }
 });
-
-// function getClassStatus() {
-//   console.log("Performing action...");
-//   classList.forEach(async (value, key) => {
-//     const status = await getCourseInfo(classList.get(key));
-//     console.log(`Key: ${key}, Value: ${value}`);
-//     if (status) console.log(`${status}`);
-//   });
-// }
 
 client.login(TOKEN);
