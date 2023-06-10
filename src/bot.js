@@ -5,6 +5,7 @@ dotenv.config();
 
 const classList = new Map();
 const TOKEN = process.env.TOKEN;
+const CHANNEL_ID = process.env.CHANNEL_ID;
 const client = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
@@ -16,7 +17,19 @@ const client = new Client({
 
 client.on("ready", (c) => {
   console.log(`${client.user.tag} is online.`);
-  setInterval(getClassStatus, 5000);
+  const delay = 5000;
+  setInterval(() => {
+    console.log("Performing action...");
+    const channel = client.channels.cache.get(CHANNEL_ID);
+    if (channel) {
+      classList.forEach(async (value, key) => {
+        const status = await getCourseInfo(classList.get(key));
+        if (status) {
+            channel.send(`${key} is open`)
+        }
+      });
+    }
+  }, delay);
 });
 
 client.on(`interactionCreate`, async (interaction) => {
@@ -46,7 +59,7 @@ client.on(`interactionCreate`, async (interaction) => {
     //   interaction.reply(`${myClassList}`);
     // });
     // interaction.reply(`${classList}`);
-    interaction.reply(`CLASS LIST:\n   ${[...classList.keys()].join('\n   ')}`);
+    interaction.reply(`CLASS LIST:\n   ${[...classList.keys()].join("\n   ")}`);
   }
 
   if (interaction.commandName === "remove") {
@@ -60,13 +73,13 @@ client.on(`interactionCreate`, async (interaction) => {
   }
 });
 
-function getClassStatus() {
-  console.log("Performing action...");
-  classList.forEach(async (value, key) => {
-    const status = await getCourseInfo(classList.get(key));
-    console.log(`Key: ${key}, Value: ${value}`);
-    if (status) console.log(`${status}`);
-  });
-}
+// function getClassStatus() {
+//   console.log("Performing action...");
+//   classList.forEach(async (value, key) => {
+//     const status = await getCourseInfo(classList.get(key));
+//     console.log(`Key: ${key}, Value: ${value}`);
+//     if (status) console.log(`${status}`);
+//   });
+// }
 
 client.login(TOKEN);
