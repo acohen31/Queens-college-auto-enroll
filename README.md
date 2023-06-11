@@ -1,5 +1,6 @@
 # Queens-college-auto-enroll
 
-Required Libraries:
+Required Python Libraries:
     requests
     bs4
+    grpc
